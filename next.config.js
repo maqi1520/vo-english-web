@@ -3,7 +3,7 @@ module.exports = {
       return [
         {
           source: '/api/:path*',
-          destination: `http://localhost:4000/api/:path*`,
+          destination: `http://voapi.maqib.cn/api/:path*`,
         },
       ]
     },
