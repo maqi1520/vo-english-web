@@ -17,7 +17,15 @@
         "camel2DashComponentName": false
       },
       "@ant-design/icons"
+    ],
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@": "./src"
+        }
+      }
     ]
   ],
-  "ignore": ["node_modules"],
+  "ignore": ["node_modules"]
 }

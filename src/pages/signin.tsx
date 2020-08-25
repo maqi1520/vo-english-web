@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Row, Col, Alert } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
-import { register } from '../common/api';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { login } from '../common/api';
 import Header from '../components/Header';
 import { useRouter } from 'next/router';
 
@@ -12,20 +12,19 @@ const formItemLayout = {
   },
 };
 
-const RegistrationForm = () => {
+const Signin: React.FC = () => {
   const [form] = Form.useForm();
   const [error, setError] = useState('');
   const router = useRouter();
 
   const onFinish = (values) => {
     //console.log('Received values of form: ', values);
-    register(values)
+    login(values)
       .then((res) => {
-        console.log(res);
-        router.push('/signin');
+        sessionStorage.setItem('token', res.token);
+        router.push('/');
       })
       .catch((err) => {
-        console.log(err);
         setError(err.message);
       });
   };
@@ -36,7 +35,7 @@ const RegistrationForm = () => {
       <main className="container">
         <Row>
           <Col xs={{ span: 0 }} sm={{ span: 12 }}>
-            <img width="100%" src="/static/login2.png" />
+            <img width="100%" src="/static/login1.png" />
           </Col>
           <Col className="login-form" xs={{ span: 24 }} sm={{ span: 12 }}>
             <h2>欢迎回来，立即免费登录</h2>
@@ -51,35 +50,17 @@ const RegistrationForm = () => {
             <Form
               {...formItemLayout}
               form={form}
-              name="register"
+              name="login"
               onFinish={onFinish}
               initialValues={{}}
               scrollToFirstError
             >
               <Form.Item
-                name="nickname"
-                size="large"
-                rules={[
-                  {
-                    required: true,
-                    message: '请输入你的昵称!',
-                    whitespace: true,
-                  },
-                ]}
-              >
-                <Input
-                  size="large"
-                  prefix={<UserOutlined className="site-form-item-icon" />}
-                  placeholder="昵称"
-                />
-              </Form.Item>
-              <Form.Item
                 name="email"
-                size="large"
                 rules={[
                   {
                     type: 'email',
-                    message: '输入无效的邮箱号!',
+                    message: '请输入正确的邮箱号!',
                   },
                   {
                     required: true,
@@ -88,6 +69,7 @@ const RegistrationForm = () => {
                 ]}
               >
                 <Input
+                  onChange={() => setError('')}
                   size="large"
                   prefix={<MailOutlined className="site-form-item-icon" />}
                   placeholder="邮箱"
@@ -95,7 +77,6 @@ const RegistrationForm = () => {
               </Form.Item>
 
               <Form.Item
-                size="large"
                 name="password"
                 rules={[
                   {
@@ -106,41 +87,16 @@ const RegistrationForm = () => {
                 hasFeedback
               >
                 <Input.Password
+                  onChange={() => setError('')}
                   size="large"
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   placeholder="密码"
                 />
               </Form.Item>
 
-              <Form.Item
-                name="confirm"
-                dependencies={['password']}
-                hasFeedback
-                rules={[
-                  {
-                    required: true,
-                    message: '请确认您的密码!',
-                  },
-                  ({ getFieldValue }) => ({
-                    validator(rule, value) {
-                      if (!value || getFieldValue('password') === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject('您输入的两个密码不匹配!');
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password
-                  size="large"
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  placeholder="确认密码"
-                />
-              </Form.Item>
-
               <Form.Item>
                 <Button size="large" block type="primary" htmlType="submit">
-                  注册
+                  登录
                 </Button>
               </Form.Item>
             </Form>
@@ -152,4 +108,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default Signin;

@@ -1,10 +1,10 @@
 module.exports = {
-    async rewrites() {
-      return [
-        {
-          source: '/api/:path*',
-          destination: `http://voapi.maqib.cn/api/:path*`,
-        },
-      ]
-    },
-  }
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `http://localhost:4000/:path*`,
+      },
+    ];
+  },
+};

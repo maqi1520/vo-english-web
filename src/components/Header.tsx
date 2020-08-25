@@ -1,10 +1,10 @@
-import React from 'react'
-import { Button } from 'antd'
-import Link from 'next/link'
+import React, { ReactElement } from 'react';
+import { Button } from 'antd';
+import Link from 'next/link';
 
-const ButtonGroup = Button.Group
+const ButtonGroup = Button.Group;
 
-export default function Header() {
+export default function Header(): ReactElement {
   return (
     <header className="header">
       <div className="header-inner clearfix">
@@ -21,5 +21,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }
