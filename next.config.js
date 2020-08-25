@@ -1,10 +1,12 @@
 module.exports = {
   async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: `http://localhost:4000/:path*`,
-      },
-    ];
+    return process.env.NODE_ENV !== 'production'
+      ? [
+          {
+            source: '/api/:path*',
+            destination: `http://localhost:4000/:path*`,
+          },
+        ]
+      : [];
   },
 };
