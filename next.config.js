@@ -4,7 +4,7 @@ module.exports = {
       ? [
           {
             source: '/api/:path*',
-            destination: `http://localhost:4000/:path*`,
+            destination: `http://localhost:4000/api/:path*`,
           },
         ]
       : [];
